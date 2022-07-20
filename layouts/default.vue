@@ -99,19 +99,34 @@ export default {
       items: [
         {
           icon: 'mdi-apps',
-          title: 'Welcome',
+          title: 'Home',
           to: '/'
         },
         {
-          icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire'
+          icon: 'mdi-cannabis',
+          title: 'Livros',
+          to: '/livros'
+        },
+        {
+          icon: 'mdi-cannabis',
+          title: 'Categorias',
+          to: '/categorias'
+        },
+        {
+          icon: 'mdi-cannabis',
+          title: 'Autores',
+          to: '/autores'
+        },
+        {
+          icon: 'mdi-cannabis',
+          title: 'Usuários',
+          to: '/usuarios'
         }
       ],
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'Vuetify.js'
+      title: 'Biblioteca'
     }
   }
 }
