@@ -61,11 +61,16 @@ export default {
 
     methods: {
         async cadastrar () {
-            let categoria = {
+            try {
+                let categoria = {
                 nome: this.categoria.nome
             }
-            let response = await this.$axios.$post('http://localhost:3333/categorias', categoria);
-            console.log(response); 
+                let response = await this.$axios.$post('http://localhost:3333/categorias', categoria);
+                this.$toast.success(`Categoria ID ${response.id} cadastrada com sucesso!`);
+                this.$router.push('/categorias')
+            } catch (error) {
+                this.$toast.error('Impossível concluir a operação, contate o suporte.')
+            }
         }
     }
 }

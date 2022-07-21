@@ -41,9 +41,7 @@
             </v-col>
         </v-row>
         <v-row>
-            <v-col
-                cols="2"
-            >
+            <v-col>
                 <v-autocomplete
               v-model="livro.idAutor"
               :items="autores"
@@ -53,9 +51,7 @@
               item-value="id"
             ></v-autocomplete>
             </v-col>
-            <v-col
-                cols="2"
-            >
+            <v-col>
                 <v-autocomplete
               v-model="livro.idCategoria"
               :items="categorias"
@@ -108,14 +104,19 @@ export default {
 
     methods: {
         async cadastrar () {
-            let livro = {
+            try {
+                let livro = {
                 titulo: this.livro.titulo,
                 idAutor: this.livro.idAutor,
                 idCategoria: this.livro.idCategoria,
                 sinopse: this.livro.sinopse
             };
-            let response = await this.$axios.$post('http://localhost:3333/livros', livro);
-            console.log(response); 
+                let response = await this.$axios.$post('http://localhost:3333/livros', livro);
+                this.$router.push('/livros')
+                this.$toast.success(`Livro ID ${response.id} cadastrado com sucesso!`);
+            } catch (error) {
+                this.$toast.error('Impossível concluir a operação, contate o suporte.')
+            }
         },
 
             async getAutores () {

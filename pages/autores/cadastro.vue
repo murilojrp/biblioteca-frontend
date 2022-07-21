@@ -73,12 +73,18 @@ export default {
 
     methods: {
         async cadastrar () {
-            let autor = {
-                nome: this.autor.nome,
-                email: this.autor.email
+            try {
+                let autor = {
+                    nome: this.autor.nome,
+                    email: this.autor.email
+                }
+                let response = await this.$axios.$post('http://localhost:3333/autores', autor);
+                console.log(response)
+                this.$toast.success(`Autor ID ${response.id} cadastrado com sucesso!`);
+                this.$router.push('/autores')
+            } catch (error) {
+                this.$toast.error('Impossível concluir a operação, contate o suporte.')
             }
-            let response = await this.$axios.$post('http://localhost:3333/autores', autor);
-            console.log(response); 
         }
     }
 }

@@ -98,27 +98,27 @@ export default {
       fixed: false,
       items: [
         {
-          icon: 'mdi-apps',
+          icon: 'mdi-home',
           title: 'Home',
           to: '/'
         },
         {
-          icon: 'mdi-cannabis',
+          icon: 'mdi-bookshelf',
           title: 'Livros',
           to: '/livros'
         },
         {
-          icon: 'mdi-cannabis',
+          icon: 'mdi-book-settings',
           title: 'Categorias',
           to: '/categorias'
         },
         {
-          icon: 'mdi-cannabis',
+          icon: 'mdi-chef-hat ',
           title: 'Autores',
           to: '/autores'
         },
         {
-          icon: 'mdi-cannabis',
+          icon: 'mdi-account-multiple',
           title: 'Usuários',
           to: '/usuarios'
         }

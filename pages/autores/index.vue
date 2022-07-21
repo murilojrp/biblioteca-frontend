@@ -28,7 +28,32 @@
          :items="autores"
          :items-per-page="10"
          class="elevation-1"
-        ></v-data-table>
+         style="background-color: #93c9a6; border:double"
+        >
+        <template v-slot:item.actions="{ item }">
+            <v-icon
+                small
+                class="mr-2"
+                @click="editItem(item)"
+            >
+                mdi-pencil
+            </v-icon>
+            <v-icon
+                small
+                @click="deleteItem(item)"
+            >
+                mdi-delete
+            </v-icon>
+        </template>
+<template v-slot:no-data>
+  <v-btn
+    color="primary"
+    @click="initialize"
+  >
+    Reset
+  </v-btn>
+</template>
+        </v-data-table>
     </v-container>
   </v-container>
 </template>
@@ -57,7 +82,8 @@ export default {
                     align: 'center',
                     sortable: false,
                     value: 'email',
-                }
+                },
+                { text: "", value: "actions" }
             ],
             autores: []
         }
@@ -70,6 +96,14 @@ export default {
     methods: {
         async getAutores () {
             this.autores = await this.$axios.$get('http://localhost:3333/autores');
+        },
+
+        async deleteItem (autor) {
+            if (confirm(`Deseja deletar o autor ID:${autor.id}-${autor.nome}?`)) {
+                let response = await this.$axios.$post('http://localhost:3333/autores/deletar', { id: autor.id });
+                this.$toast.success(`Autor ID:${autor.id}-${autor.nome} deletado com sucesso!`)
+                this.getAutores();
+            }
         }
     }
 
