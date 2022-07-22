@@ -2,7 +2,7 @@
   <v-container>
     <h1>Cadastro de Autores</h1>
     <hr>
-    <v-form>
+    <v-form v-model="valid">
     <v-container>
         <v-row>
             <v-col
@@ -24,6 +24,8 @@
                     v-model="autor.nome"
                     placeholder="Nome"
                     label="Nome"
+                    :rules="rule"
+                    required
                     outlined
                 >
                 </v-text-field>
@@ -35,6 +37,8 @@
                     v-model="autor.email"
                     placeholder="E-mail"
                     label="E-mail"
+                    :rules="rule"
+                    required
                     outlined
                 >
                 </v-text-field>
@@ -50,9 +54,9 @@
     </v-btn>
     <v-btn
         outlined
-        @click="cadastrar"
+        @click="persistir"
     >
-    Cadastrar
+    Salvar
     </v-btn>
   </v-container>
 </template>
@@ -63,29 +67,54 @@ export default {
 
     data () {
         return {
+            valid: false,
             autor: {
                 id: null,
                 nome: null,
                 email: null
-            }
+            },
+            rule: [
+                v => !!v || 'Esse campo é obrigatório'
+            ]
         }
     },
 
+    created () {
+    if (this.$route?.params?.id) {
+      this.getById(this.$route.params.id)
+    }
+  },
+
     methods: {
-        async cadastrar () {
+        async persistir () {
             try {
+                //primeiro valida-se se o formulário está preenchido
+                if (!this.valid) {
+                    return this.$toast.warning('O formulário de cadastro não é válido!')
+                }
+                //montamos a variárel autor para enviar nos posts
                 let autor = {
                     nome: this.autor.nome,
                     email: this.autor.email
                 }
-                let response = await this.$axios.$post('http://localhost:3333/autores', autor);
-                console.log(response)
-                this.$toast.success(`Autor ID ${response.id} cadastrado com sucesso!`);
-                this.$router.push('/autores')
-            } catch (error) {
-                this.$toast.error('Impossível concluir a operação, contate o suporte.')
-            }
+        //caso não tenha ID na tela, significa que é um cadastro NOVO
+        //por isso ele vai apenas com o objeto da autor para o cadastro
+        //como no final tem um RETURN, ele vai cair fora da função PERSISTIR
+        if (!this.autor.id) {
+          await this.$axios.$post('http://localhost:3333/autores', autor);
+          this.$toast.success('Cadastro realizado com sucesso!');
+          return this.$router.push('/autores');
         }
+        await this.$axios.$post(`http://localhost:3333/autores/${this.autor.id}`, autor);
+        this.$toast.success('Cadastro atualizado com sucesso!');
+        return this.$router.push('/autores');
+      } catch (error) {
+        this.$toast.error('Ocorreu um erro ao realizar o cadastro!');
+      }
+    },
+    async getById (id) {
+      this.autor = await this.$axios.$get(`http://localhost:3333/autores/${id}`);
     }
+  }
 }
 </script>

@@ -28,19 +28,21 @@
          :items="autores"
          :items-per-page="10"
          class="elevation-1"
-         style="background-color: #93c9a6; border:double"
+         style="background-color: #350845; border:double"
         >
         <template v-slot:item.actions="{ item }">
             <v-icon
                 small
                 class="mr-2"
                 @click="editItem(item)"
+                color="blue"
             >
                 mdi-pencil
             </v-icon>
             <v-icon
                 small
                 @click="deleteItem(item)"
+                color="red"
             >
                 mdi-delete
             </v-icon>
@@ -99,13 +101,23 @@ export default {
         },
 
         async deleteItem (autor) {
+            try {
             if (confirm(`Deseja deletar o autor ID:${autor.id}-${autor.nome}?`)) {
                 let response = await this.$axios.$post('http://localhost:3333/autores/deletar', { id: autor.id });
                 this.$toast.success(`Autor ID:${autor.id}-${autor.nome} deletado com sucesso!`)
                 this.getAutores();
-            }
+            } 
+            } catch (error) {
+            this.$toast.error('Ocorreu um erro ao atender a requisição. Contate o Gabriel.')
         }
+     },
+    async editItem (autor) {
+      this.$router.push({
+        name: 'autores-cadastro',
+        params: { id: autor.id }
+      });
     }
+  }
 
 }
 </script>

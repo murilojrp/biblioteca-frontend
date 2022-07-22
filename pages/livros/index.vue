@@ -20,6 +20,15 @@
             Cadastrar
           </v-btn>
         </v-col>
+        <v-col>
+          <v-btn
+            outlined
+            to="/livros/busca"
+            color="purple"
+          >
+            Busca por Código
+          </v-btn>
+        </v-col>
         </v-row>
     </v-container>
     <v-container>
@@ -28,19 +37,21 @@
          :items="livros"
          :items-per-page="10"
          class="elevation-1"
-         style="background-color: #93c9a6; border:double"
+         style="background-color: #350845; border:double"
         >
         <template v-slot:item.actions="{ item }">
             <v-icon
                 small
                 class="mr-2"
                 @click="editItem(item)"
+                color="blue"
             >
                 mdi-pencil
             </v-icon>
             <v-icon
                 small
                 @click="deleteItem(item)"
+                color="red"
             >
                 mdi-delete
             </v-icon>
@@ -105,13 +116,22 @@ export default {
         },
 
         async deleteItem (livro) {
+            try {
             if (confirm(`Deseja deletar o livro ID:${livro.id}-${livro.titulo}?`)) {
                 let response = await this.$axios.$post('http://localhost:3333/livros/deletar', { id: livro.id });
                 this.$toast.success(`Livro ID:${livro.id}-${livro.titulo} deletado com sucesso!`)
                 this.getLivros();
-            }
+                } 
+            } catch (error) {
+            this.$toast.error('Ocorreu um erro ao atender a requisição. Contate o Gabriel.')
         }
+    },
+    async editItem (livro) {
+      this.$router.push({
+        name: 'livros-cadastro',
+        params: { id: livro.id }
+      });
+    }        
     }
-
 }
 </script>
