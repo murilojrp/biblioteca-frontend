@@ -121,6 +121,11 @@ export default {
           icon: 'mdi-account-multiple',
           title: 'Usuários',
           to: '/usuarios'
+        },
+        {
+          icon: 'mdi-calculator',
+          title: 'Carcule',
+          to: '/carcule'
         }
       ],
       miniVariant: false,
