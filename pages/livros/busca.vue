@@ -30,11 +30,21 @@
         > <v-card-title>
         {{response.message}}
         </v-card-title>
-        <v-card-text>
-            {{response.emprestimos}}
-        </v-card-text>
+            <v-card-text v-if="response.emprestimos">
+                Empréstimo: {{response.emprestimos[0].id}}
+                <br>
+                Prazo: {{response.emprestimos[0].prazo}}
+                <br>
+                Data da Devolução: {{response.emprestimos[0].devolucao.substr(0,10)}}
+                <br>
+                Data do Empréstimo: {{response.emprestimos[0].created_at.substr(0,10)}}
+                <br>
+                Código do Usuário: {{response.emprestimos[0].idUsuario}}
+                <br>
+                Código do Livro: {{response.emprestimos[0].emprestimo_livros.idLivro}}
+            </v-card-text>
         </v-card>
-        </v-row>
+    </v-row>
   </v-container>
 </template>
 
@@ -62,7 +72,7 @@ export default {
         },
         async buscar () {
             this.response = await this.$axios.$post('http://localhost:3333/emprestimos/validar', {idLivro: this.livro.id})
-    }
+        },
 }
 }
 </script>

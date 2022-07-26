@@ -126,6 +126,11 @@ export default {
           icon: 'mdi-calculator',
           title: 'Carcule',
           to: '/carcule'
+        },
+        {
+          icon: 'mdi-keyboard-return',
+          title: 'Empréstimos',
+          to: '/emprestimos'
         }
       ],
       miniVariant: false,
