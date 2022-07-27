@@ -16,34 +16,42 @@
         </v-col>
     </v-row>
     <v-row>
+        <v-col>
         <v-btn
             outlined
             @click="buscar"
         >
             Buscar
         </v-btn>
+        </v-col>
+        <v-col>
+        <v-btn
+                outlined
+                to="/livros"
+            >
+                Voltar
+            </v-btn>
+            </v-col>
     </v-row>
     <v-row>
-        <v-card
-      elevation="2"
-      style="margin-top:5%"
-        > <v-card-title>
-        {{response.message}}
-        </v-card-title>
-            <v-card-text v-if="response.emprestimos">
-                Empréstimo: {{response.emprestimos[0].id}}
-                <br>
-                Prazo: {{response.emprestimos[0].prazo}}
-                <br>
-                Data da Devolução: {{response.emprestimos[0].devolucao.substr(0,10)}}
-                <br>
-                Data do Empréstimo: {{response.emprestimos[0].created_at.substr(0,10)}}
-                <br>
-                Código do Usuário: {{response.emprestimos[0].idUsuario}}
-                <br>
-                Código do Livro: {{response.emprestimos[0].emprestimo_livros.idLivro}}
-            </v-card-text>
-        </v-card>
+        <v-container>
+            <v-card
+                elevation="2"
+                style="margin-top:5%"
+            > <v-card-title>
+               {{response.message}}    
+            </v-card-title>
+                <v-card-text v-if="response.emprestimos">
+                    Número do empréstimo: {{response.emprestimos[0]?.id}}
+                    <br>
+                    Prazo: {{response.emprestimos[0]?.prazo}}
+                    <br>
+                    Data do Empréstimo: {{response.emprestimos[0]?.created_at.substr(0,10)}}
+                    <br>
+                    Código do usuário: {{response.emprestimos[0]?.idUsuario}}
+                </v-card-text>
+            </v-card>
+        </v-container>
     </v-row>
   </v-container>
 </template>
@@ -58,12 +66,13 @@ export default {
                 id: null
             }, 
             livros: [],
-            response: {}
+            response: {},
+            usuario: {}
         }
     },
     
     created () {
-        this.getLivros()
+        this.getLivros();
     },
 
     methods: {
@@ -72,7 +81,7 @@ export default {
         },
         async buscar () {
             this.response = await this.$axios.$post('http://localhost:3333/emprestimos/validar', {idLivro: this.livro.id})
-        },
-}
+            }
+        }
 }
 </script>

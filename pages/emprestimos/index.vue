@@ -41,6 +41,15 @@
             </v-icon>
             <v-icon
                 small
+                class="mr-2"
+                @click="viewEmprestimo(item)"
+                color="green"
+            >
+                mdi-eye
+            </v-icon>
+            <v-icon
+                small
+                class="mr-2"
                 @click="deleteItem(item)"
                 color="red"
             >
@@ -91,12 +100,6 @@ export default {
                     sortable: false,
                     value: 'created_at',
                 },
-                {
-                    text: 'Livros',
-                    align: 'center',
-                    sortable: false,
-                    value: 'livros',
-                },
                 { text: "", value: "actions" }
             ],
             emprestimos: [],
@@ -107,6 +110,7 @@ export default {
     created () {
         this.getEmprestimos();
         this.getLivros();
+        this.viewEmprestimo();
     },
 
     methods: {
@@ -139,7 +143,14 @@ export default {
         } catch (error) {
           this.$toast.error('Ocorreu um erro ao atender a requisição. Contate o Gabriel.')
         }
-      }
-  }
+      },
+
+      async viewEmprestimo (emprestimos) {
+        this.$router.push({
+        name: 'emprestimos-cadastro',
+        params: { id: emprestimos.id }
+        })
+    }
+    }
 }
 </script>
