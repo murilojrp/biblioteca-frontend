@@ -6,20 +6,28 @@
         <v-row>
             <v-col>
             <v-btn
-        outlined
-        @click="getCategorias"
-    >
-        Pesquisar
-    </v-btn>
-    </v-col>
-    <v-col>
-          <v-btn
-            outlined
-            to="/categorias/cadastro"
-          >
-            Cadastrar
-          </v-btn>
-        </v-col>
+                outlined
+                color="blue"
+                @click="getCategorias"
+            >
+                Pesquisar
+                <v-icon
+                    style="margin-left:5%"
+                >
+                    mdi-magnify
+                </v-icon>
+            </v-btn>
+            <v-btn
+                color="green"
+                fab
+                style="margin-left:1%"
+                to="/categorias/cadastro"
+            >
+                <v-icon>
+                    mdi-plus
+                </v-icon>
+            </v-btn>
+            </v-col>
         </v-row>
     </v-container>
     <v-container>

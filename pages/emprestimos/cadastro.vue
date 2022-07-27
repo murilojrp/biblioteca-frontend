@@ -31,7 +31,6 @@
                   v-model="emprestimo.prazo"
                   label="Prazo"
                   prepend-icon="mdi-calendar"
-                  disabled
                   readonly
                   v-bind="attrs"
                   v-on="on"

@@ -123,9 +123,9 @@ export default {
                 }
                 let livro = {
                 titulo: this.livro.titulo,
+                sinopse: this.livro.sinopse,
                 idAutor: this.livro.idAutor,
-                idCategoria: this.livro.idCategoria,
-                sinopse: this.livro.sinopse
+                idCategoria: this.livro.idCategoria
             };
                 if (!this.livro.id) {
           await this.$axios.$post('http://localhost:3333/livros', livro);
